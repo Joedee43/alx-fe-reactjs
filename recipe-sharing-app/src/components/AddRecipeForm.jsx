@@ -1,43 +1,32 @@
 import { useState } from 'react';
-import useRecipeStore from './recipeStore';
+import useRecipeStore from '../store/recipeStore';
 
 const AddRecipeForm = () => {
   const addRecipe = useRecipeStore((state) => state.addRecipe);
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    ingredients: '',
-    instructions: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+  const [title, setTitle] = useState(''); // Added setTitle state
+  const [description, setDescription] = useState('');
+  const [ingredients, setIngredients] = useState('');
+  const [instructions, setInstructions] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const ingredientsArray = formData.ingredients
+    const ingredientsArray = ingredients
       .split(',')
       .map(item => item.trim())
       .filter(item => item.length > 0);
 
     addRecipe({
-      title: formData.title,
-      description: formData.description,
+      title,
+      description,
       ingredients: ingredientsArray,
-      instructions: formData.instructions
+      instructions
     });
 
-    setFormData({
-      title: '',
-      description: '',
-      ingredients: '',
-      instructions: ''
-    });
+    // Reset form including title
+    setTitle('');
+    setDescription('');
+    setIngredients('');
+    setInstructions('');
   };
 
   return (
@@ -50,8 +39,8 @@ const AddRecipeForm = () => {
             type="text"
             id="title"
             name="title"
-            value={formData.title}
-            onChange={handleChange}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)} // Using setTitle
             required
           />
         </div>
@@ -61,8 +50,8 @@ const AddRecipeForm = () => {
           <textarea
             id="description"
             name="description"
-            value={formData.description}
-            onChange={handleChange}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
@@ -72,8 +61,8 @@ const AddRecipeForm = () => {
           <textarea
             id="ingredients"
             name="ingredients"
-            value={formData.ingredients}
-            onChange={handleChange}
+            value={ingredients}
+            onChange={(e) => setIngredients(e.target.value)}
             required
           />
         </div>
@@ -83,8 +72,8 @@ const AddRecipeForm = () => {
           <textarea
             id="instructions"
             name="instructions"
-            value={formData.instructions}
-            onChange={handleChange}
+            value={instructions}
+            onChange={(e) => setInstructions(e.target.value)}
             required
           />
         </div>
