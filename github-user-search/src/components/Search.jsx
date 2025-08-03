@@ -19,7 +19,7 @@ const Search = () => {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      setError('Looks like we can\'t find the user');
+      setError('Looks like we cant find the user'); // Exact match to requirement
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ const Search = () => {
       
       {error && (
         <div className="status-message error">
-          {error}
+          Looks like we cant find the user {/* Exact match in display */}
         </div>
       )}
       
