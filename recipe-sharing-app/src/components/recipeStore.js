@@ -9,7 +9,8 @@ const useRecipeStore = create((set, get) => ({
       ingredients: ['pasta', 'eggs', 'cheese', 'pancetta'],
       prepTime: 20,
       cookTime: 15,
-      difficulty: 'Medium'
+      difficulty: 'Medium',
+      tags: ['italian', 'pasta', 'dinner']
     },
     {
       id: 2,
@@ -18,69 +19,76 @@ const useRecipeStore = create((set, get) => ({
       ingredients: ['flour', 'butter', 'sugar', 'chocolate chips'],
       prepTime: 15,
       cookTime: 10,
-      difficulty: 'Easy'
-    }
+      difficulty: 'Easy',
+      tags: ['dessert', 'baking', 'cookies']
+    },
+    // More recipes...
   ],
   
-  // Search and filter state
-  searchTerm: '',
-  filters: {
-    ingredients: [],
-    maxPrepTime: null,
-    difficulty: null
-  },
+  // User favorites
+  favorites: [],
+  
+  // Recommendations
+  recommendations: [],
   
   // Actions
-  addRecipe: (newRecipe) => set((state) => ({ 
-    recipes: [...state.recipes, { ...newRecipe, id: Date.now() }]
+  addFavorite: (recipeId) => set((state) => {
+    if (!state.favorites.includes(recipeId)) {
+      return { favorites: [...state.favorites, recipeId] };
+    }
+    return state;
+  }),
+  
+  removeFavorite: (recipeId) => set((state) => ({
+    favorites: state.favorites.filter(id => id !== recipeId)
   })),
   
-  deleteRecipe: (id) => set((state) => ({
-    recipes: state.recipes.filter(recipe => recipe.id !== id)
-  })),
+  toggleFavorite: (recipeId) => set((state) => {
+    const isFavorite = state.favorites.includes(recipeId);
+    return {
+      favorites: isFavorite
+        ? state.favorites.filter(id => id !== recipeId)
+        : [...state.favorites, recipeId]
+    };
+  }),
   
-  updateRecipe: (id, updatedRecipe) => set((state) => ({
-    recipes: state.recipes.map(recipe => 
-      recipe.id === id ? { ...recipe, ...updatedRecipe } : recipe
-    )
-  })),
-  
-  // Search and filter actions
-  setSearchTerm: (term) => set({ searchTerm: term }),
-  
-  setFilter: (filterName, value) => set((state) => ({
-    filters: { ...state.filters, [filterName]: value }
-  })),
-  
-  // Computed filtered recipes
-  getFilteredRecipes: () => {
-    const { recipes, searchTerm, filters } = get();
+  // Recommendation logic
+  generateRecommendations: () => set((state) => {
+    if (state.favorites.length === 0) {
+      // If no favorites, show popular recipes
+      return { 
+        recommendations: [...state.recipes]
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3)
+      };
+    }
     
-    return recipes.filter(recipe => {
-      // Search term matching (title or description)
-      const matchesSearch = searchTerm === '' || 
-        recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        recipe.description.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      // Ingredient filter
-      const matchesIngredients = filters.ingredients.length === 0 ||
-        filters.ingredients.every(ingredient => 
-          recipe.ingredients.some(recipeIngredient => 
-            recipeIngredient.toLowerCase().includes(ingredient.toLowerCase())
-          )
-        );
-      
-      // Prep time filter
-      const matchesPrepTime = !filters.maxPrepTime || 
-        (recipe.prepTime + recipe.cookTime) <= filters.maxPrepTime;
-      
-      // Difficulty filter
-      const matchesDifficulty = !filters.difficulty || 
-        recipe.difficulty === filters.difficulty;
-      
-      return matchesSearch && matchesIngredients && matchesPrepTime && matchesDifficulty;
+    // Get tags from favorite recipes
+    const favoriteTags = state.favorites.flatMap(id => {
+      const recipe = state.recipes.find(r => r.id === id);
+      return recipe?.tags || [];
     });
-  }
+    
+    // Count tag occurrences
+    const tagCounts = favoriteTags.reduce((acc, tag) => {
+      acc[tag] = (acc[tag] || 0) + 1;
+      return acc;
+    }, {});
+    
+    // Score recipes based on matching tags
+    const scoredRecipes = state.recipes
+      .filter(recipe => !state.favorites.includes(recipe.id)) // Exclude favorites
+      .map(recipe => {
+        const score = recipe.tags.reduce((sum, tag) => sum + (tagCounts[tag] || 0), 0);
+        return { ...recipe, score };
+      })
+      .filter(recipe => recipe.score > 0) // Only recipes with matching tags
+      .sort((a, b) => b.score - a.score); // Highest score first
+    
+    return {
+      recommendations: scoredRecipes.slice(0, 3) // Top 3 recommendations
+    };
+  })
 }));
 
 export default useRecipeStore;
