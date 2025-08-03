@@ -18,6 +18,9 @@ const useRecipeStore = create((set) => ({
     }
   ],
   
+  // Add the missing setRecipes action
+  setRecipes: (newRecipes) => set({ recipes: newRecipes }),
+  
   addRecipe: (newRecipe) => set((state) => ({ 
     recipes: [...state.recipes, { ...newRecipe, id: Date.now() }]
   })),
