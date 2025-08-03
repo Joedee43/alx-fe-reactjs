@@ -1,15 +1,18 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://api.github.com';
+const BASE_URL = 'https://api.github.com';
 
 export const fetchUserData = async (username) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/users/${username}`);
+    const response = await axios.get(`${BASE_URL}/users/${username}`);
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 404) {
-      throw new Error('User not found');
+    if (error.response) {
+      if (error.response.status === 404) {
+        throw new Error('User not found');
+      }
+      throw new Error(`API Error: ${error.response.status}`);
     }
-    throw new Error('Failed to fetch user data');
+    throw new Error('Network Error: Could not connect to GitHub API');
   }
 };
