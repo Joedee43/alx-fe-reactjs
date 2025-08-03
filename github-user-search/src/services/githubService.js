@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://api.github.com';
+// const API_BASE_URL = 'https://api.github.com';
+const API_BASE_URL = 'https://api.github.com/search/users?q=';
 
 export const searchUsers = async ({ query, location, minRepos, page = 1 }) => {
   try {
