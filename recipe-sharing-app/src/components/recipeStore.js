@@ -18,14 +18,11 @@ const useRecipeStore = create((set) => ({
     }
   ],
   
-  // Add the missing setRecipes action
-  setRecipes: (newRecipes) => set({ recipes: newRecipes }),
-  
   addRecipe: (newRecipe) => set((state) => ({ 
     recipes: [...state.recipes, { ...newRecipe, id: Date.now() }]
   })),
   
-  removeRecipe: (id) => set((state) => ({
+  deleteRecipe: (id) => set((state) => ({
     recipes: state.recipes.filter(recipe => recipe.id !== id)
   })),
   
@@ -33,7 +30,11 @@ const useRecipeStore = create((set) => ({
     recipes: state.recipes.map(recipe => 
       recipe.id === id ? { ...recipe, ...updatedRecipe } : recipe
     )
-  }))
+  })),
+  
+  getRecipeById: (id) => {
+    return useRecipeStore.getState().recipes.find(recipe => recipe.id === id);
+  }
 }));
 
 export default useRecipeStore;
