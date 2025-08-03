@@ -19,7 +19,7 @@ const EditRecipeForm = ({ recipe }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Added the missing event.preventDefault()
     const ingredientsArray = formData.ingredients
       .split(',')
       .map(item => item.trim())
