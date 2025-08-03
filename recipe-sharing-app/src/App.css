@@ -1,0 +1,82 @@
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.recipe-list {
+  margin-top: 2rem;
+}
+
+.recipe-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.recipe-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.recipe-details {
+  margin: 1rem 0;
+}
+
+.recipe-details h4 {
+  margin-bottom: 0.5rem;
+}
+
+.add-recipe-form {
+  background: #f0f0f0;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  min-height: 100px;
+}
+
+button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.delete-btn {
+  background: #f44336;
+}
