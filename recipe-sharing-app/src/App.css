@@ -1,54 +1,97 @@
-/* Recipe Details Styles */
-.recipe-details {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: #4CAF50;
-  text-decoration: none;
-}
-
-.section {
-  margin: 2rem 0;
-}
-
-.actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-/* Edit Form Styles */
-.edit-recipe-form {
-  background: #f9f9f9;
+/* Search and Filter Styles */
+.search-container {
+  background: #f5f5f5;
   padding: 1.5rem;
   border-radius: 8px;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
-/* Button Styles */
-.save-btn {
-  background: #2196F3;
+.search-bar {
+  margin-bottom: 1.5rem;
 }
 
-.delete-btn {
-  background: #f44336;
-}
-
-/* Navigation */
-.nav-link {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  background: #4CAF50;
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 1rem;
 }
 
-.recipe-link {
-  color: inherit;
-  text-decoration: none;
+.filter-panel {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.filter-group {
+  margin-bottom: 1.5rem;
+}
+
+.filter-group h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.ingredient-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ingredient-input input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.ingredient-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ingredient-tag {
+  background: #e0f7fa;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ingredient-tag button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+
+.clear-filters {
+  background: #f5f5f5;
+  color: #333;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.clear-filters:hover {
+  background: #eee;
+}
+
+/* Recipe Meta Info */
+.recipe-meta {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.results-info {
+  margin-bottom: 1rem;
+  font-style: italic;
+  color: #666;
 }

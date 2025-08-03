@@ -3,6 +3,8 @@ import './App.css';
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
+import SearchBar from './components/SearchBar';
+import FilterPanel from './components/FilterPanel';
 
 function App() {
   return (
@@ -10,7 +12,7 @@ function App() {
       <div className="app">
         <header className="app-header">
           <h1>
-            <Link to="/">Recipe Sharing App</Link>
+            <Link to="/">Recipe Finder</Link>
           </h1>
           <nav>
             <Link to="/add" className="nav-link">Add Recipe</Link>
@@ -20,7 +22,10 @@ function App() {
           <Routes>
             <Route path="/" element={
               <>
-                <AddRecipeForm />
+                <div className="search-container">
+                  <SearchBar />
+                  <FilterPanel />
+                </div>
                 <RecipeList />
               </>
             } />
