@@ -1,18 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import UserDetail from './pages/UserDetail';
+import SearchUser from './components/SearchUser';
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/user/:username" element={<UserDetail />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="app">
+      <h1>GitHub User Search</h1>
+      <SearchUser />
+    </div>
   );
 }
 
